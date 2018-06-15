@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>saving mems to your gallery</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Take shots for your mems</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Loading images to create awsome mems to share with your friends</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
