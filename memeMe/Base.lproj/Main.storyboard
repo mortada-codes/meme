@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Meme Editor View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="memeMe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MemeEditorViewController" customModule="memeMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -25,7 +25,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                         <items>
                                             <navigationItem title="MemeMe" id="8SO-WC-z6V">
-                                                <barButtonItem key="leftBarButtonItem" title="Share" id="Xy8-H3-dpe">
+                                                <barButtonItem key="leftBarButtonItem" systemItem="action" id="Xy8-H3-dpe">
                                                     <connections>
                                                         <action selector="shareMeme:" destination="BYZ-38-t0r" id="HzB-fB-uNh"/>
                                                     </connections>
@@ -96,20 +96,31 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="0mO-Bm-HMb">
                                         <rect key="frame" x="0.0" y="617" width="375" height="30"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xjG-Hq-fr9">
-                                                <rect key="frame" x="0.0" y="0.0" width="187.5" height="30"/>
-                                                <state key="normal" title="Camera"/>
-                                                <connections>
-                                                    <action selector="openCamera:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aQL-Gn-wHN"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DG6-9r-ryf">
-                                                <rect key="frame" x="187.5" y="0.0" width="187.5" height="30"/>
-                                                <state key="normal" title="ALbum"/>
-                                                <connections>
-                                                    <action selector="showALbum:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qWL-OV-k11"/>
-                                                </connections>
-                                            </button>
+                                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zeT-l4-kSQ">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
+                                                <items>
+                                                    <barButtonItem style="plain" id="rVW-Ct-kw9">
+                                                        <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="xjG-Hq-fr9">
+                                                            <rect key="frame" x="16" y="0.0" width="187.5" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <state key="normal" title="Camera"/>
+                                                            <connections>
+                                                                <action selector="openCamera:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aQL-Gn-wHN"/>
+                                                            </connections>
+                                                        </button>
+                                                    </barButtonItem>
+                                                    <barButtonItem style="plain" id="oKr-Ki-ymR">
+                                                        <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DG6-9r-ryf">
+                                                            <rect key="frame" x="234" y="0.0" width="125" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <state key="normal" title="ALbum"/>
+                                                            <connections>
+                                                                <action selector="showALbum:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qWL-OV-k11"/>
+                                                            </connections>
+                                                        </button>
+                                                    </barButtonItem>
+                                                </items>
+                                            </toolbar>
                                         </subviews>
                                     </stackView>
                                 </subviews>

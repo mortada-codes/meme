@@ -8,8 +8,8 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
-
+class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var imageViewMeme: UIImageView!
     
@@ -21,35 +21,35 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         cameraButton.isEnabled  = UIImagePickerController.isSourceTypeAvailable(.camera)
-    subscribeToKeyboardNotification()
+        subscribeToKeyboardNotification()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        topTextField.defaultTextAttributes = self.memeTextDefaultAttributes
-        bottomTextField.defaultTextAttributes = memeTextDefaultAttributes
-        topTextField.delegate = self
-        bottomTextField.delegate = self
+        configure(topTextField, with: memeTextDefaultAttributes)
+        configure(bottomTextField, with: memeTextDefaultAttributes)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         unsubscribeFromKeyboardNotification()
     }
-
+    
     @IBAction func resetMem(_ sender: Any) {
         imageViewMeme.image = nil
         topTextField.attributedText = NSMutableAttributedString(string:"TOP")
-      
+        
         bottomTextField.attributedText = NSMutableAttributedString(string:"BOTTOM")
-                }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-   
+    
+    
     @IBAction func shareMeme(_ sender: Any) {
         let newMeme = generateMeme()
         let activityController = UIActivityViewController(activityItems: [newMeme], applicationActivities: nil)
@@ -66,33 +66,36 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     @IBAction func showALbum(_ sender: Any) {
         
-        let imageController = UIImagePickerController()
-        imageController.delegate = self
-        imageController.sourceType = .photoLibrary
-        present(imageController, animated: true, completion: nil)
+        pickAnImage(from: .photoLibrary)
     }
     @IBAction func openCamera(_ sender: Any) {
         
-        let imageController = UIImagePickerController()
-        imageController.delegate = self
-        imageController.sourceType = .camera
-        present(imageController, animated: true, completion: nil)
+     
+        pickAnImage(from: .camera)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image  = info[UIImagePickerControllerOriginalImage]  {
             imageViewMeme.image = image as? UIImage
         }
-       dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-            dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func pickAnImage(from source: UIImagePickerControllerSourceType) {
+        // TODO:- code to pick an image from source
+        let imageController = UIImagePickerController()
+        imageController.delegate = self
+        imageController.sourceType = source
+        present(imageController, animated: true, completion: nil)
     }
     
 }
 // keyboard event handler extension
-extension ViewController {
+extension MemeEditorViewController {
     func subscribeToKeyboardNotification(){
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: .UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillHide), name: .UIKeyboardWillHide , object: nil)
@@ -103,10 +106,8 @@ extension ViewController {
     }
     
     @objc func keyboardWillShow(_ notification:Notification){
-        if topTextField.isEditing == true {
-            view.frame.origin.y = getKeyboardHeight(notification)
-        }else if bottomTextField.isEditing == true{
-            view.frame.origin.y = -getKeyboardHeight(notification)
+     if bottomTextField.isEditing == true{
+            view.frame.origin.y = getKeyboardHeight(notification) * -1
         }
         
     }
@@ -125,22 +126,22 @@ extension ViewController {
 }
 
 // text delegate  extension
-extension ViewController : UITextFieldDelegate {
+extension MemeEditorViewController : UITextFieldDelegate {
     
     var memeTextDefaultAttributes :[String:Any] { get { return [
-        NSAttributedStringKey.font.rawValue:UIFont(name: "HelveticaNeue", size: 60)!,
-        NSAttributedStringKey.strokeColor.rawValue: UIColor.green,
-        NSAttributedStringKey.strokeWidth.rawValue: 3,
-    NSAttributedStringKey.foregroundColor.rawValue: UIColor.blue,
-   ]}
+        NSAttributedStringKey.font.rawValue:UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+        NSAttributedStringKey.strokeColor.rawValue: UIColor.black,
+        NSAttributedStringKey.strokeWidth.rawValue: -3,
+        NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
+        ]}
     }
-        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-           textField.resignFirstResponder()
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
         return true
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-    textField.allowsEditingTextAttributes = true
+        textField.allowsEditingTextAttributes = true
         textField.attributedText = NSMutableAttributedString(string:"")
     }
     
@@ -148,17 +149,17 @@ extension ViewController : UITextFieldDelegate {
         
     }
     
-}
-// meme Struct
-struct Meme {
-    var topText:String
-    var bottomText:String
-    var memeImage: UIImage
-    var memeTextImage: UIImage
+    func configure(_ textField: UITextField, with defaultText: [String:Any]) {
+        // TODO:- code to configure the textField
+        textField.defaultTextAttributes = memeTextDefaultAttributes
+        textField.delegate = self
+    }
+    
 }
 
+
 // meme generatation extension
-extension ViewController {
+extension MemeEditorViewController {
     
     func hideHeaderAndFooter(isHidden: Bool,withDuration:Double){
         
@@ -170,7 +171,7 @@ extension ViewController {
             
             self.bottomButtons.isHidden = isHidden
         }
-       
+        
     }
     
     func generateMeme() -> UIImage{
@@ -184,11 +185,11 @@ extension ViewController {
     }
     
     func saveMeme(meme: Meme){
-         let image = meme.memeTextImage
-            if let data = UIImagePNGRepresentation(image){
-                let path = getDirectory()
-                try? data.write(to: path)
-            }
+        let image = meme.memeTextImage
+        if let data = UIImagePNGRepresentation(image){
+            let path = getDirectory()
+            try? data.write(to: path)
+        }
         
     }
     func getDirectory() -> URL{
