@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
 
+    @IBOutlet weak var shareButton: UIBarButtonItem!
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var imageViewMeme: UIImageView!
     
@@ -18,9 +19,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var bottomButtons: UIStackView!
     
+    var memedImage: UIImage?
     
-    
-    override func viewWillAppear(_ animated: Bool) {
+        override func viewWillAppear(_ animated: Bool) {
         cameraButton.isEnabled  = UIImagePickerController.isSourceTypeAvailable(.camera)
     subscribeToKeyboardNotification()
     }
@@ -51,14 +52,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
    
     @IBAction func shareMeme(_ sender: Any) {
-        let newMeme = generateMeme()
-        let activityController = UIActivityViewController(activityItems: [newMeme], applicationActivities: nil)
+       memedImage = generateMeme()
+        let activityController = UIActivityViewController(activityItems: [memedImage! as AnyObject], applicationActivities: nil)
         activityController.completionWithItemsHandler =  {(activityType: UIActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
-            guard completed != true else {
+            guard completed == true else {
+                print(error?.localizedDescription ?? "not completed with no errors")
                 return
             }
-            let meme = Meme(topText: self.topTextField.text!, bottomText: self.topTextField.text!, memeImage: self.imageViewMeme.image!,memeTextImage: newMeme)
-            self.saveMeme(meme: meme)
+          
+            self.saveMeme()
         }
         present(activityController, animated: true ){
             
@@ -82,6 +84,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image  = info[UIImagePickerControllerOriginalImage]  {
             imageViewMeme.image = image as? UIImage
+            shareButton.isEnabled = true
         }
        dismiss(animated: true, completion: nil)
     }
@@ -128,10 +131,10 @@ extension ViewController {
 extension ViewController : UITextFieldDelegate {
     
     var memeTextDefaultAttributes :[String:Any] { get { return [
-        NSAttributedStringKey.font.rawValue:UIFont(name: "HelveticaNeue", size: 60)!,
-        NSAttributedStringKey.strokeColor.rawValue: UIColor.green,
-        NSAttributedStringKey.strokeWidth.rawValue: 3,
-    NSAttributedStringKey.foregroundColor.rawValue: UIColor.blue,
+        NSAttributedStringKey.font.rawValue:UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+        NSAttributedStringKey.strokeColor.rawValue: UIColor.black,
+        NSAttributedStringKey.strokeWidth.rawValue: -3,
+    NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
    ]}
     }
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -147,6 +150,7 @@ extension ViewController : UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         
     }
+    
     
 }
 // meme Struct
@@ -183,17 +187,16 @@ extension ViewController {
         return image
     }
     
-    func saveMeme(meme: Meme){
-         let image = meme.memeTextImage
-            if let data = UIImagePNGRepresentation(image){
-                let path = getDirectory()
-                try? data.write(to: path)
-            }
-        
+    func saveMeme(){
+          let meme = Meme(topText: self.topTextField.text!, bottomText: self.bottomTextField.text!, memeImage: self.imageViewMeme.image!,memeTextImage: memedImage!)
+    let delegate =    UIApplication.shared.delegate as! AppDelegate
+        delegate.addMeme(meme)
+        print("meme saved!!")
     }
-    func getDirectory() -> URL{
-        var url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        url.appendPathComponent("meme\(Date().timeIntervalSince1970).png", isDirectory: false)
-        return url
-    }
+    
+//    func getDirectory() -> URL{
+//        var url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+//        url.appendPathComponent("meme\(Date().timeIntervalSince1970).png", isDirectory: false)
+//        return url
+//    }
 }
