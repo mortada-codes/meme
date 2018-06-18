@@ -17,7 +17,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var bottomButtons: UIStackView!
-    
+    var memedImage : UIImage?
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,14 +51,14 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     
     @IBAction func shareMeme(_ sender: Any) {
-        let newMeme = generateMeme()
-        let activityController = UIActivityViewController(activityItems: [newMeme], applicationActivities: nil)
+        memedImage = generateMeme()
+        let activityController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
         activityController.completionWithItemsHandler =  {(activityType: UIActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
             guard completed != true else {
                 return
             }
-            let meme = Meme(topText: self.topTextField.text!, bottomText: self.topTextField.text!, memeImage: self.imageViewMeme.image!,memeTextImage: newMeme)
-            self.saveMeme(meme: meme)
+            
+            self.saveMeme()
         }
         present(activityController, animated: true ){
             
@@ -70,7 +70,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     }
     @IBAction func openCamera(_ sender: Any) {
         
-     
+        
         pickAnImage(from: .camera)
     }
     
@@ -89,6 +89,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
         // TODO:- code to pick an image from source
         let imageController = UIImagePickerController()
         imageController.delegate = self
+        
         imageController.sourceType = source
         present(imageController, animated: true, completion: nil)
     }
@@ -106,10 +107,12 @@ extension MemeEditorViewController {
     }
     
     @objc func keyboardWillShow(_ notification:Notification){
-     if bottomTextField.isEditing == true{
-            view.frame.origin.y = getKeyboardHeight(notification) * -1
-        }
         
+        if bottomTextField.isEditing == true{
+  
+            view.frame.origin.y = getKeyboardHeight(notification) * -1
+    
+        }
     }
     
     @objc func keyboardwillHide(_ notification: Notification){
@@ -184,17 +187,17 @@ extension MemeEditorViewController {
         return image
     }
     
-    func saveMeme(meme: Meme){
-        let image = meme.memeTextImage
-        if let data = UIImagePNGRepresentation(image){
-            let path = getDirectory()
-            try? data.write(to: path)
-        }
+    func saveMeme(){
+        
+        let meme = Meme(topText: self.topTextField.text!, bottomText: self.topTextField.text!, memeImage: self.imageViewMeme.image!,memeTextImage: memedImage!)
+        
         
     }
-    func getDirectory() -> URL{
-        var url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        url.appendPathComponent("meme\(Date().timeIntervalSince1970).png", isDirectory: false)
-        return url
+    
+}
+
+extension UIImagePickerController {
+    override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .all
     }
 }
