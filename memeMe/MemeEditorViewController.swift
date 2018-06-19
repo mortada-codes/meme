@@ -8,8 +8,12 @@
 
 import UIKit
 
+
 class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
+
+    @IBOutlet weak var shareButton: UIBarButtonItem!
+
     @IBOutlet weak var cameraButton: UIButton!
     @IBOutlet weak var imageViewMeme: UIImageView!
     
@@ -17,11 +21,13 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var bottomButtons: UIStackView!
+
     var memedImage : UIImage?
     
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         cameraButton.isEnabled  = UIImagePickerController.isSourceTypeAvailable(.camera)
         subscribeToKeyboardNotification()
     }
@@ -51,13 +57,16 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     
     @IBAction func shareMeme(_ sender: Any) {
+
         memedImage = generateMeme()
         let activityController = UIActivityViewController(activityItems: [memedImage], applicationActivities: nil)
+
         activityController.completionWithItemsHandler =  {(activityType: UIActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
-            guard completed != true else {
+            guard completed == true else {
+                print(error?.localizedDescription ?? "not completed with no errors")
                 return
             }
-            
+
             self.saveMeme()
         }
         present(activityController, animated: true ){
@@ -77,6 +86,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let image  = info[UIImagePickerControllerOriginalImage]  {
             imageViewMeme.image = image as? UIImage
+            shareButton.isEnabled = true
         }
         dismiss(animated: true, completion: nil)
     }
@@ -140,6 +150,11 @@ extension MemeEditorViewController : UITextFieldDelegate {
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+    NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
+   ]}
+    }
+        func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+           textField.resignFirstResponder()
         return true
     }
     
@@ -152,11 +167,13 @@ extension MemeEditorViewController : UITextFieldDelegate {
         
     }
     
+
     func configure(_ textField: UITextField, with defaultText: [String:Any]) {
         // TODO:- code to configure the textField
         textField.defaultTextAttributes = memeTextDefaultAttributes
         textField.delegate = self
     }
+
     
 }
 
@@ -188,16 +205,23 @@ extension MemeEditorViewController {
     }
     
     func saveMeme(){
-        
+    
         let meme = Meme(topText: self.topTextField.text!, bottomText: self.topTextField.text!, memeImage: self.imageViewMeme.image!,memeTextImage: memedImage!)
-        
-        
+        let delegate =    UIApplication.shared.delegate as! AppDelegate
+        delegate.addMeme(meme)
+        print("meme saved!!")
     }
     
 }
 
 extension UIImagePickerController {
     override open var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .all
+        return .all   
     }
+    
+//    func getDirectory() -> URL{
+//        var url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+//        url.appendPathComponent("meme\(Date().timeIntervalSince1970).png", isDirectory: false)
+//        return url
+//    }
 }
