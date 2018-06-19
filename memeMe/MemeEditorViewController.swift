@@ -16,7 +16,8 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var navigator: UINavigationBar!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
-    @IBOutlet weak var bottomButtons: UIStackView!
+    
+    @IBOutlet weak var bottomButtons: UIToolbar!
     
     
     
