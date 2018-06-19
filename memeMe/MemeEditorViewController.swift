@@ -148,11 +148,7 @@ extension MemeEditorViewController : UITextFieldDelegate {
         NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
         ]}
     }
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-    NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
-   ]}
-    }
+  
         func textFieldShouldReturn(_ textField: UITextField) -> Bool {
            textField.resignFirstResponder()
         return true
