@@ -20,9 +20,11 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     @IBOutlet weak var navigator: UINavigationBar!
     @IBOutlet weak var topTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
+
     @IBOutlet weak var bottomButtons: UIStackView!
 
     var memedImage : UIImage?
+
     
     
     override func viewWillAppear(_ animated: Bool) {
