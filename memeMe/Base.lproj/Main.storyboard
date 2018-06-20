@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="lt2-ji-nP6">
-    <device id="retina3_5" orientation="landscape">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina3_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -16,14 +16,14 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="MemeEditorViewController" customModule="memeMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="320"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="m1H-v1-cEX">
-                                <rect key="frame" x="0.0" y="32" width="480" height="288"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                                 <subviews>
                                     <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="thB-y4-eY6">
-                                        <rect key="frame" x="0.0" y="0.0" width="480" height="32"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <items>
                                             <navigationItem title="MemeMe" id="8SO-WC-z6V">
                                                 <barButtonItem key="leftBarButtonItem" enabled="NO" systemItem="action" id="Xy8-H3-dpe">
@@ -40,21 +40,21 @@
                                         </items>
                                     </navigationBar>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JCw-fS-yW6">
-                                        <rect key="frame" x="0.0" y="32" width="480" height="212"/>
+                                        <rect key="frame" x="0.0" y="44" width="320" height="372"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RMY-X9-D1v">
-                                                <rect key="frame" x="0.0" y="0.0" width="480" height="212"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
                                                 <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </imageView>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mXk-MW-XUA">
-                                                <rect key="frame" x="220.5" y="43" width="39" height="19"/>
+                                                <rect key="frame" x="16" y="17" width="288" height="45"/>
                                                 <attributedString key="attributedText">
                                                     <fragment content="TOP">
                                                         <attributes>
                                                             <color key="NSColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <font key="NSFont" size="52" name="Arial-BoldMT"/>
+                                                            <font key="NSFont" size="40" name="Arial-BoldMT"/>
                                                             <font key="NSOriginalFont" size="52" name="Arial-BoldMT"/>
-                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                                         </attributes>
                                                     </fragment>
                                                 </attributedString>
@@ -80,22 +80,24 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="OL3-xb-z58" secondAttribute="bottom" constant="29" id="4qa-6g-Ghw"/>
                                             <constraint firstAttribute="bottom" secondItem="RMY-X9-D1v" secondAttribute="bottom" id="6hm-rR-96z"/>
+                                            <constraint firstAttribute="trailing" secondItem="OL3-xb-z58" secondAttribute="trailing" constant="16" id="A1O-ER-9gV"/>
+                                            <constraint firstAttribute="trailing" secondItem="mXk-MW-XUA" secondAttribute="trailing" constant="16" id="CB1-Kt-NzU"/>
                                             <constraint firstItem="RMY-X9-D1v" firstAttribute="leading" secondItem="JCw-fS-yW6" secondAttribute="leading" id="DsH-Ox-aaz"/>
                                             <constraint firstItem="RMY-X9-D1v" firstAttribute="top" secondItem="JCw-fS-yW6" secondAttribute="top" id="HD0-Xg-cbs"/>
                                             <constraint firstItem="RMY-X9-D1v" firstAttribute="top" secondItem="mXk-MW-XUA" secondAttribute="bottom" constant="-62" id="IkO-5e-3wU"/>
                                             <constraint firstAttribute="bottom" secondItem="RMY-X9-D1v" secondAttribute="bottom" id="KBo-qf-1n0"/>
                                             <constraint firstAttribute="trailing" secondItem="RMY-X9-D1v" secondAttribute="trailing" id="KGL-dG-XdH"/>
-                                            <constraint firstItem="mXk-MW-XUA" firstAttribute="centerX" secondItem="RMY-X9-D1v" secondAttribute="centerX" id="NVL-0z-IHe"/>
                                             <constraint firstAttribute="trailing" secondItem="RMY-X9-D1v" secondAttribute="trailing" id="O6y-Jg-EcB"/>
-                                            <constraint firstItem="OL3-xb-z58" firstAttribute="centerX" secondItem="RMY-X9-D1v" secondAttribute="centerX" id="WGW-Nm-Tph"/>
                                             <constraint firstItem="RMY-X9-D1v" firstAttribute="leading" secondItem="JCw-fS-yW6" secondAttribute="leading" id="irR-LQ-VWG"/>
                                             <constraint firstItem="RMY-X9-D1v" firstAttribute="top" secondItem="JCw-fS-yW6" secondAttribute="top" id="mXf-lX-OXH"/>
-                                            <constraint firstAttribute="bottom" secondItem="OL3-xb-z58" secondAttribute="bottom" constant="29" id="tjA-Ka-NKR"/>
+                                            <constraint firstItem="OL3-xb-z58" firstAttribute="leading" secondItem="JCw-fS-yW6" secondAttribute="leading" constant="16" id="v7l-io-bEJ"/>
+                                            <constraint firstItem="mXk-MW-XUA" firstAttribute="leading" secondItem="JCw-fS-yW6" secondAttribute="leading" constant="16" id="zcn-Pn-sY1"/>
                                         </constraints>
                                     </view>
                                     <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zeT-l4-kSQ">
-                                        <rect key="frame" x="0.0" y="244" width="480" height="44"/>
+                                        <rect key="frame" x="0.0" y="416" width="320" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="qWi-uQ-ZfT"/>
                                         </constraints>
@@ -112,7 +114,7 @@
                                             </barButtonItem>
                                             <barButtonItem style="plain" id="oKr-Ki-ymR">
                                                 <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DG6-9r-ryf">
-                                                    <rect key="frame" x="339" y="7" width="125" height="30"/>
+                                                    <rect key="frame" x="203.5" y="7" width="100.5" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" title="ALbum"/>
                                                     <connections>

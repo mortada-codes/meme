@@ -98,7 +98,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     func pickAnImage(from source: UIImagePickerControllerSourceType) {
-        // TODO:- code to pick an image from source
+        
         let imageController = UIImagePickerController()
         imageController.delegate = self
         
@@ -143,11 +143,17 @@ extension MemeEditorViewController {
 // text delegate  extension
 extension MemeEditorViewController : UITextFieldDelegate {
     
-    var memeTextDefaultAttributes :[String:Any] { get { return [
+    var memeTextDefaultAttributes :[String:Any] { get {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        
+        return [
         NSAttributedStringKey.font.rawValue:UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
         NSAttributedStringKey.strokeColor.rawValue: UIColor.black,
         NSAttributedStringKey.strokeWidth.rawValue: -3,
         NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
+        NSAttributedStringKey.paragraphStyle.rawValue: paragraphStyle,
+    
         ]}
     }
   
@@ -161,14 +167,19 @@ extension MemeEditorViewController : UITextFieldDelegate {
         textField.attributedText = NSMutableAttributedString(string:"")
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
-        
-    }
     
-
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        let attributedText:NSMutableAttributedString = textField.attributedText?.mutableCopy() as! NSMutableAttributedString
+        attributedText.mutableString.replaceCharacters(in: range, with: string.capitalized)
+        
+        textField.attributedText = attributedText
+        return false
+    }
     func configure(_ textField: UITextField, with defaultText: [String:Any]) {
-        // TODO:- code to configure the textField
+        
         textField.defaultTextAttributes = memeTextDefaultAttributes
+        textField.autocapitalizationType = UITextAutocapitalizationType.allCharacters
         textField.delegate = self
     }
 
@@ -183,11 +194,11 @@ extension MemeEditorViewController {
         
         UIView.animate(withDuration: withDuration){
             self.navigator.isHidden = isHidden
-            
+             self.bottomButtons.isHidden = isHidden
         }
         UIView.animate(withDuration: withDuration){
             
-            self.bottomButtons.isHidden = isHidden
+           
         }
         
     }
@@ -198,11 +209,12 @@ extension MemeEditorViewController {
         view.drawHierarchy(in: view.frame, afterScreenUpdates: true)
         let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-        hideHeaderAndFooter(isHidden: false,withDuration: 0.7)
+        hideHeaderAndFooter(isHidden: false,withDuration: 0.0)
         return image
     }
     
     func saveMeme(){
+
     
         let meme = Meme(topText: self.topTextField.text!, bottomText: self.topTextField.text!, memeImage: self.imageViewMeme.image!,memeTextImage: memedImage!)
         let delegate =    UIApplication.shared.delegate as! AppDelegate
@@ -217,9 +229,5 @@ extension UIImagePickerController {
         return .all   
     }
     
-//    func getDirectory() -> URL{
-//        var url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-//        url.appendPathComponent("meme\(Date().timeIntervalSince1970).png", isDirectory: false)
-//        return url
-//    }
+
 }
