@@ -87,7 +87,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     func pickAnImage(from source: UIImagePickerControllerSourceType) {
-        // TODO:- code to pick an image from source
+        
         let imageController = UIImagePickerController()
         imageController.delegate = self
         imageController.sourceType = source
