@@ -19,6 +19,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     @IBOutlet weak var bottomButtons: UIToolbar!
     
+    var memedImage : UIImage?
     
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,14 +53,13 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     
     @IBAction func shareMeme(_ sender: Any) {
-        let newMeme = generateMeme()
-        let activityController = UIActivityViewController(activityItems: [newMeme], applicationActivities: nil)
+        memedImage = generateMeme()
+        let activityController = UIActivityViewController(activityItems: [memedImage!], applicationActivities: nil)
         activityController.completionWithItemsHandler =  {(activityType: UIActivityType?, completed: Bool, returnedItems: [Any]?, error: Error?) in
             guard completed != true else {
                 return
             }
-            let meme = Meme(topText: self.topTextField.text!, bottomText: self.topTextField.text!, memeImage: self.imageViewMeme.image!,memeTextImage: newMeme)
-            self.saveMeme(meme: meme)
+           self.saveMeme()
         }
         present(activityController, animated: true ){
             
@@ -129,11 +129,17 @@ extension MemeEditorViewController {
 // text delegate  extension
 extension MemeEditorViewController : UITextFieldDelegate {
     
-    var memeTextDefaultAttributes :[String:Any] { get { return [
+    var memeTextDefaultAttributes :[String:Any] { get {
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        
+        return [
         NSAttributedStringKey.font.rawValue:UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
         NSAttributedStringKey.strokeColor.rawValue: UIColor.black,
         NSAttributedStringKey.strokeWidth.rawValue: -3,
         NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
+        NSAttributedStringKey.paragraphStyle.rawValue: paragraphStyle,
+    
         ]}
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -146,13 +152,19 @@ extension MemeEditorViewController : UITextFieldDelegate {
         textField.attributedText = NSMutableAttributedString(string:"")
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
-        
-    }
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        let attributedText:NSMutableAttributedString = textField.attributedText?.mutableCopy() as! NSMutableAttributedString
+        attributedText.mutableString.replaceCharacters(in: range, with: string.capitalized)
+        
+        textField.attributedText = attributedText
+        return false
+    }
     func configure(_ textField: UITextField, with defaultText: [String:Any]) {
         // TODO:- code to configure the textField
         textField.defaultTextAttributes = memeTextDefaultAttributes
+        textField.autocapitalizationType = UITextAutocapitalizationType.allCharacters
         textField.delegate = self
     }
     
@@ -166,11 +178,11 @@ extension MemeEditorViewController {
         
         UIView.animate(withDuration: withDuration){
             self.navigator.isHidden = isHidden
-            
+             self.bottomButtons.isHidden = isHidden
         }
         UIView.animate(withDuration: withDuration){
             
-            self.bottomButtons.isHidden = isHidden
+           
         }
         
     }
@@ -181,21 +193,15 @@ extension MemeEditorViewController {
         view.drawHierarchy(in: view.frame, afterScreenUpdates: true)
         let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
-        hideHeaderAndFooter(isHidden: false,withDuration: 0.7)
+        hideHeaderAndFooter(isHidden: false,withDuration: 0.0)
         return image
     }
     
-    func saveMeme(meme: Meme){
-        let image = meme.memeTextImage
-        if let data = UIImagePNGRepresentation(image){
-            let path = getDirectory()
-            try? data.write(to: path)
+    func saveMeme(){
+        let meme = Meme(topText: self.topTextField.text!, bottomText: self.topTextField.text!, memeImage: self.imageViewMeme.image!,memeTextImage: memedImage!)
+        
         }
         
-    }
-    func getDirectory() -> URL{
-        var url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        url.appendPathComponent("meme\(Date().timeIntervalSince1970).png", isDirectory: false)
-        return url
-    }
+    
+  
 }
