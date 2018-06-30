@@ -31,6 +31,7 @@ class MemeGridViewController : UICollectionViewController {
         }else{
          dimension = (view.frame.height - ( 2 * space)) / 3.0
         }
+        print("cell width \(dimension)")
         flowLayoutView.minimumInteritemSpacing = space
         flowLayoutView.minimumLineSpacing = space
         flowLayoutView.itemSize = CGSize(width: dimension, height: dimension)
@@ -60,9 +61,9 @@ class MemeGridViewController : UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "memeGridCell", for: indexPath) as! MemeCollectionViewCell
-       cell.memeTopLabel.text = memes[indexPath.item].topText
-        cell.imageView.image = memes[indexPath.item].memeImage
-       
+  
+        cell.imageView.image = memes[indexPath.item].memeTextImage
+    
         return cell
     }
     

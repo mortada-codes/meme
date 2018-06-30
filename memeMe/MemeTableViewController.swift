@@ -16,6 +16,12 @@ class MemeTableViewController : UITableViewController {
         return appDelegate.memes
     }
   
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = UITableViewAutomaticDimension
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
@@ -36,12 +42,20 @@ class MemeTableViewController : UITableViewController {
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        let meme = memes[indexPath.item]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "memeCell")
-        cell?.imageView?.image = meme.memeImage
-        cell?.textLabel?.text = meme.topText
-        cell?.detailTextLabel?.text = meme.bottomText
-        return cell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "memeCell") as! UIImageCellTableView
+        cell.memeImageView?.image = meme.memeTextImage
+        cell.memeImageView?.contentMode = .scaleToFill
+        cell.label?.text = meme.topText
+        return cell
     }
     
+  
+}
+
+
+class UIImageCellTableView : UITableViewCell {
+    
+    @IBOutlet weak var memeImageView: UIImageView!
+    @IBOutlet weak var label: UILabel!
   
 }
