@@ -13,14 +13,14 @@ import UIKit
 class ShowMemeViewController: UIViewController{
     
     @IBOutlet weak var memeImageView: UIImageView!
-    @IBOutlet weak var memeTopLabel: UILabel!
+    
     
     var meme:Meme?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         memeImageView.image = meme?.memeTextImage
-        memeTopLabel.text = meme?.topText
+       
     }
     
 }
