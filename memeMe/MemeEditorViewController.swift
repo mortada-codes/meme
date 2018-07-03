@@ -47,10 +47,8 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     }
     
     @IBAction func resetMem(_ sender: Any) {
-        imageViewMeme.image = nil
-        topTextField.attributedText = NSMutableAttributedString(string:"TOP")
+      navigationController?.popViewController(animated: true)
         
-        bottomTextField.attributedText = NSMutableAttributedString(string:"BOTTOM")
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
