@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -283,33 +282,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vSZ-uo-Cf3">
-                                <rect key="frame" x="16" y="67" width="288" height="162"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="vSZ-uo-Cf3" secondAttribute="height" multiplier="16:9" id="KwC-JJ-jCa"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vSZ-uo-Cf3">
+                                <rect key="frame" x="16" y="36" width="288" height="428"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MVU-QI-w3U">
-                                <rect key="frame" x="16" y="308" width="288" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="7FZ-bw-jmQ" firstAttribute="trailing" secondItem="vSZ-uo-Cf3" secondAttribute="trailing" constant="16" id="Joz-eQ-1Bh"/>
-                            <constraint firstItem="vSZ-uo-Cf3" firstAttribute="top" secondItem="7FZ-bw-jmQ" secondAttribute="top" constant="47" id="aQ0-FL-6F0"/>
-                            <constraint firstItem="MVU-QI-w3U" firstAttribute="top" secondItem="vSZ-uo-Cf3" secondAttribute="bottom" constant="79" id="bR4-Q7-0Un"/>
-                            <constraint firstItem="vSZ-uo-Cf3" firstAttribute="leading" secondItem="7FZ-bw-jmQ" secondAttribute="leading" constant="16" id="dSB-5T-G8R"/>
-                            <constraint firstItem="7FZ-bw-jmQ" firstAttribute="trailing" secondItem="MVU-QI-w3U" secondAttribute="trailing" constant="16" id="eH0-Q6-gpj"/>
-                            <constraint firstItem="MVU-QI-w3U" firstAttribute="leading" secondItem="7FZ-bw-jmQ" secondAttribute="leading" constant="16" id="wm1-jK-bbP"/>
+                            <constraint firstItem="vSZ-uo-Cf3" firstAttribute="leading" secondItem="7FZ-bw-jmQ" secondAttribute="leading" constant="16" id="1bz-3Y-LVC"/>
+                            <constraint firstItem="7FZ-bw-jmQ" firstAttribute="bottom" secondItem="vSZ-uo-Cf3" secondAttribute="bottom" constant="16" id="5TF-q1-Kdx"/>
+                            <constraint firstItem="7FZ-bw-jmQ" firstAttribute="trailing" secondItem="vSZ-uo-Cf3" secondAttribute="trailing" constant="16" id="PWl-Yf-cvy"/>
+                            <constraint firstItem="vSZ-uo-Cf3" firstAttribute="top" secondItem="7FZ-bw-jmQ" secondAttribute="top" constant="16" id="SE3-6n-C9e"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="7FZ-bw-jmQ"/>
                     </view>
                     <connections>
                         <outlet property="memeImageView" destination="vSZ-uo-Cf3" id="NZI-qc-aR7"/>
-                        <outlet property="memeTopLabel" destination="MVU-QI-w3U" id="VIy-Pp-4IV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YGK-dd-pxq" userLabel="First Responder" sceneMemberID="firstResponder"/>
