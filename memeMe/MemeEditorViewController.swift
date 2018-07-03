@@ -142,7 +142,7 @@ extension MemeEditorViewController : UITextFieldDelegate {
         paragraphStyle.alignment = .center
         
         return [
-        NSAttributedStringKey.font.rawValue:UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
+        NSAttributedStringKey.font.rawValue:UIFont(name: "impact", size: 40)!,
         NSAttributedStringKey.strokeColor.rawValue: UIColor.black,
         NSAttributedStringKey.strokeWidth.rawValue: -3,
         NSAttributedStringKey.foregroundColor.rawValue: UIColor.white,
