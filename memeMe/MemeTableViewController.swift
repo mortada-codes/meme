@@ -37,9 +37,7 @@ class MemeTableViewController : UITableViewController {
         navigationController?.pushViewController(memeController, animated: true)
     }
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
+   
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        let meme = memes[indexPath.item]
         let cell = tableView.dequeueReusableCell(withIdentifier: "memeCell") as! UIImageCellTableView
