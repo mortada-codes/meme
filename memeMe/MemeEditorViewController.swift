@@ -116,7 +116,7 @@ extension MemeEditorViewController {
         
         if bottomTextField.isEditing == true{
   
-            view.frame.origin.y = -getKeyboardHeight(notification) 
+            view.frame.origin.y = -getKeyboardHeight(notification)
     
         }
     }
@@ -213,7 +213,7 @@ extension MemeEditorViewController {
         let meme = Meme(topText: self.topTextField.text!, bottomText: self.topTextField.text!, memeImage: self.imageViewMeme.image!,memeTextImage: memedImage!)
         let delegate =    UIApplication.shared.delegate as! AppDelegate
         delegate.addMeme(meme)
-        print("meme saved!!")
+        debugPrint("meme saved!!")
     }
     
 }
