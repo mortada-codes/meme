@@ -116,7 +116,7 @@ extension MemeEditorViewController {
         
         if bottomTextField.isEditing == true{
   
-            view.frame.origin.y = getKeyboardHeight(notification) * -1
+            view.frame.origin.y = -getKeyboardHeight(notification) 
     
         }
     }
